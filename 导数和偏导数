@@ -1,0 +1,20 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Jan 20 16:35:09 2018
+
+@author: tian
+"""
+
+from sympy import symbols, diff
+
+'''
+导数和偏导数
+'''
+
+x= symbols('x',real = True)
+f = 2*x
+diff(f,x)
+
+x, y, z = symbols('x y z', real=True)
+f = 4*x*y + x*sin(z) + x**3 + z**8*y
+diff(f, x)
