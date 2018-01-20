@@ -2,7 +2,7 @@
 """
 Created on Sat Jan 20 16:35:09 2018
 
-@author: SHEN
+@author: tian
 """
 
 from sympy import symbols, diff
@@ -40,11 +40,12 @@ a
 x_norm = np.linalg.norm(a, axis = 0)
 x_norm
 
-a = np.array([[1,2], [3,27]])
-np.linalg.norm(a, 1,axis=-1)#-1  取x方向上的绝对值之和
-l = np.linalg.norm(a, 1,axis=0)#-1  取y方向上的绝对值之和,[4,29]
+a = np.array([[1,2], [3,-27]])
+x_norm= np.linalg.norm(a, 1,axis=-1)#-1  取x方向上的绝对值之和
+x_sum = np.sum(a, axis = 1,keepdims = True)#取x方向上的和
 
-d= a/l
+l = np.linalg.norm(a, 1,axis=0)#-1  取y方向上的绝对值之和,[4,29]
+d= a/l#广播
 '''
 [ 0.25      ,  0.06896552],
 [ 0.75      ,  0.93103448]]
