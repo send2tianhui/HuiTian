@@ -1,0 +1,51 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Jan 20 16:35:09 2018
+
+@author: SHEN
+"""
+
+from sympy import symbols, diff
+import numpy as np
+
+'''
+broadcasting广播
+'''
+a=np.array([[1],[2],[3]])
+b = a+3 
+#output [[4],
+#       [5],
+#      [6]]
+
+a=np.array([[1],[2],[3]])
+b=np.array([4])
+m=np.dot(a,b) #output [ 4,  8, 12]
+
+a = np.arange(0, 6).reshape(6, 1)
+#array([[ 0], [1], [2], [3], [4], [5]])
+b = np.arange(1, 5)
+c = a + b
+c
+'''
+       [[0, 1, 2, 3, 4],
+       [1, 2, 3, 4, 5],
+       [2, 3, 4, 5, 6],
+       [3, 4, 5, 6, 7],
+       [4, 5, 6, 7, 8],
+       [5, 6, 7, 8, 9]]
+'''
+
+a = np.arange(0, 6).reshape(2, 3)
+a
+x_norm = np.linalg.norm(a, axis = 0)
+x_norm
+
+a = np.array([[1,2], [3,27]])
+np.linalg.norm(a, 1,axis=-1)#-1  取x方向上的绝对值之和
+l = np.linalg.norm(a, 1,axis=0)#-1  取y方向上的绝对值之和,[4,29]
+
+d= a/l
+'''
+[ 0.25      ,  0.06896552],
+[ 0.75      ,  0.93103448]]
+'''
