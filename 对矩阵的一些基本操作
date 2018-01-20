@@ -1,0 +1,45 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Jan 20 16:35:09 2018
+
+@author: SHEN
+"""
+
+from sympy import symbols, diff
+import numpy as np
+
+'''
+In fact, if is a row vector then will 
+apply the exponential function to every element of x. 
+The output will thus be:
+'''
+a = np.array([1,2,3])
+
+np.exp(a)
+#output [  2.71828183,   7.3890561 ,  20.08553692]
+
+b = a+3
+#output [4, 5, 6]
+
+# 3*1
+a=np.array([[1],[2],[3]])
+b=np.array([[4],[5],[6]])
+#1*1
+d=np.dot(a.T, b)
+print(d.shape) #output （1，1）
+
+image = np.array([[[ 0.67826139,  0.29380381],
+        [ 0.90714982,  0.52835647],
+        [ 0.4215251 ,  0.45017551]],
+
+       [[ 0.92814219,  0.96677647],
+        [ 0.85304703,  0.52351845],
+        [ 0.19981397,  0.27417313]],
+
+       [[ 0.60659855,  0.00533165],
+        [ 0.10820313,  0.49978937],
+        [ 0.34144279,  0.94630077]]])
+#形成1*18的新矩阵
+n=image.reshape(1,18)
+#形成5*5的0矩阵
+k= np.zeros((5, 5))
