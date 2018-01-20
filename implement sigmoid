@@ -2,8 +2,11 @@ import math
 
 #implement sigmoid algorithm
 def sigmoid(x):
-    return 1/1+math.exp(x)
+    return 1 / (1 + math.exp(-x))
+sigmoid(0.458)
 
-#example
-sigmoid(1)
-Out[10]: 3.718281828459045
+from scipy.stats import logistic 
+logistic.cdf(0.458)
+
+from scipy.special import expit as sigmoid
+sigmoid(0.458)
