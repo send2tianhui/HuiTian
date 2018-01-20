@@ -1,0 +1,9 @@
+import math
+
+#implement sigmoid algorithm
+def sigmoid(x):
+    return 1/1+math.exp(x)
+
+#example
+sigmoid(1)
+Out[10]: 3.718281828459045
