@@ -1,0 +1,22 @@
+假设参数 w =[[w1],[w2],[w3]]   输入样本x = [[x1],[x2],[x3]]  样本 y=[y1] y in [0,1]   m行样本
+正向传导 :
+z = w1*x1 + w2*x2 + w3*x3+b = w.T *x +b
+激励函数sigmoid()
+yhat = a = sigmoid(z)
+损失函数：
+loss = -(ylog(yhat)+(1-y)log(1-yhat))
+cost函数：
+j(y,yhat)=1/m * ∑（i = 1 to m） loss(i)  
+(loss(i)= -(y(i)log(yhat(i))+(1-y(i))log(1-yhat(i))))
+反向传导：
+d(j)/d(w)  求导 记作 d(w)
+
+for i= 1 to m:
+  z(i) = w(i).T * x(i) +b
+  yhat(i) = a(i) = sigmoid(z(i))
+  j(y(i),yhat(i)) = 1/m * ∑(1 to 3)loss(y(i),yhat(i))
+  for j = 1 to 3:
+    w(j)= w(j)-d(w)(j) #j为下角标
+    b = b -d(b)
+    
+y = w.T * x + b
