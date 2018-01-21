@@ -9,14 +9,15 @@ cost函数：
 j(y,yhat)=1/m * ∑（i = 1 to m） loss(i)  
 (loss(i)= -(y(i)log(yhat(i))+(1-y(i))log(1-yhat(i))))
 反向传导：
-d(j)/d(w)  求导 记作 d(w)
+d'(w) = d(l)/d(w)   
 
 for i= 1 to m:
   z(i) = w(i).T * x(i) +b
   yhat(i) = a(i) = sigmoid(z(i))
-  j(y(i),yhat(i)) = 1/m * ∑(1 to 3)loss(y(i),yhat(i))
+  j(y(i),yhat(i)) += loss(y(i),yhat(i))
   for j = 1 to 3:
     w(j)= w(j)-d(w)(j) #j为下角标
+    d'(w)(j) +   = d'(w)(j) 
     b = b -d(b)
     
 y = w.T * x + b
