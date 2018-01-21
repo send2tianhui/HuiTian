@@ -1,0 +1,29 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Jan 20 14:57:25 2018
+
+@author: SHEN
+"""
+#向量化 点积相乘 效率比 for循环快100百本
+import numpy as np
+import time
+
+a = np.arange(0,10000000).reshape(10000000,1)
+b = np.arange(0,10000000).reshape(10000000,1)
+w=0
+
+time_start_for = time.time()*1000
+
+for i in range(0, 10000000):
+    w=a[i]*b[i]
+time_end_for = time.time()*1000
+
+tc= time_end_for - time_start_for
+tc
+
+time_start_dot = time.time()*1000
+c= np.dot(a.T,b)
+time_end_dot = time.time()*1000
+
+tc_dot = time_end_dot - time_start_dot
+tc_dot
