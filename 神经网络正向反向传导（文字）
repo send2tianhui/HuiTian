@@ -11,13 +11,20 @@ j(y,yhat)=1/m * ∑（i = 1 to m） loss(i)
 反向传导：
 d'(w) = d(l)/d(w)   
 
+d'(w) = 0 d'(b) = 0
 for i= 1 to m:
   z(i) = w(i).T * x(i) +b
   yhat(i) = a(i) = sigmoid(z(i))
   j(y(i),yhat(i)) += loss(y(i),yhat(i))
   for j = 1 to 3:
     w(j)= w(j)-d(w)(j) #j为下角标
-    d'(w)(j) +   = d'(w)(j) 
-    b = b -d(b)
+    d'(w) += d'(w) 
+    d'(b) += d'(b)
     
-y = w.T * x + b
+w1 = w1- d'(w1)
+w2 = w2- d'(w2)
+.
+.
+.
+.
+
