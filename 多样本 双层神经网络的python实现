@@ -12,20 +12,22 @@ import numpy as np
 目的要输出初始化的 w1 b1 w2 b2
 '''
 def initialize_parameters(n_x, n_h, n_y):
-    w1 = np.random.randn((n_h, n_x))
-    b1 = np.zeros((n_x,1))    
-    w2 = np.random.randn((n_y, n_h))
-    b1 = np.zeros((n_h,1))
+    w1 = np.random.randn(n_h, n_x)
+    b1 = np.zeros((n_h,1))    
+    w2 = np.random.randn(n_y, n_h)
+    b2 = np.zeros((n_y,1))
     
     assert(w1.shape == (n_h, n_x))
-    assert(b1.shape == (n_x, 1))
+    assert(b1.shape == (n_h, 1))
     assert(w2.shape == (n_y, n_h))
-    assert(b2.shape == (n_h, 1))
+    assert(b2.shape == (n_y, 1))
+    
     parameters = {"w1": w1, 
                   "w2": w2,
                   "b1": b1,
                   "b2": b2}
     return parameters
+
 
 #激活函数
 def sigmoid(x):
@@ -40,12 +42,16 @@ def forward_propagation(X, parameters):
     w2 = parameters["w2"]
     b1 = parameters["b1"]
     b2 = parameters["b2"]
-    m = X.sharp[1]
-   
-    z1 = np.dot(w1, m) + b1
-    z2 = np.dot(w2, m) + b2
     
+    w1
+    w2
+    b1
+    b2
+   
+    z1 = np.dot(w1, X) + b1
     a1 = np.tanh(z1)
+    z2 = np.dot(w2, a1) + b2
+    
     a2 = sigmoid(z2)
     
     cache = {"z1": z1,
@@ -56,6 +62,7 @@ def forward_propagation(X, parameters):
     return a2, cache
 
 def compute_cost(a2, Y, parameters):
+    m = a2.shape[1]
     logprobs = np.multiply(np.log(a2),Y) + np.multiply(np.log(1 - a2),1 - Y)
     cost = - np.sum(logprobs) / m
     cost = np.squeeze(cost)     # makes sure cost is the dimension we expect.
@@ -63,7 +70,7 @@ def compute_cost(a2, Y, parameters):
     assert(isinstance(cost, float))
 
     return cost
-
+ 
 def backward_propagation(parameters, cache, X, Y):
     w1 = parameters["w1"]
     w2 = parameters["w2"]
@@ -84,6 +91,7 @@ def backward_propagation(parameters, cache, X, Y):
              "db2":db2}
     return grads
     
+
 def update_parameters(parameters, grads, learning_rate = 1.2):
     w1 = parameters["w1"]
     w2 = parameters["w2"]
@@ -110,9 +118,10 @@ def update_parameters(parameters, grads, learning_rate = 1.2):
 得出训练后的W b
 '''
 def nn_model(X, Y, n_h, num_iterations = 10000, print_cost=False):
+    parameters = initialize_parameters(5,4,3)
+    X = np.random.rand(5,6)
+    Y = np.random.randn(3,1)
     for i in range(0, num_iteractions):       
-        parameters = initialize_parameters(5,4,3)
-        print(parameters["w1"].shape)
         A2, cache = forward_propagation(X, parameters)
         cost = compute_cost(A2, Y, parameters)
         grads = backward_propagation(parameters, cache, X, Y)
