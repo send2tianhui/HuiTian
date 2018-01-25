@@ -1,0 +1,166 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Jan 24 08:49:30 2018
+
+@author: SHEN
+"""
+
+import numpy as np
+
+'''
+layer_dims 是 神经网络的矩阵 列数代表层数
+'''
+def initialize_parameters(layer_dims):
+    l=len(layer_dims) -1 
+
+    
+    for i in range(1, l):
+        n = len(layer_dims[l])
+        parameters['w'+ str(l)] = np.random.randn(n, n- 1)* 0.01
+        parameters['b'+ str(l)] = np.random.randn(n, n- 1)* 0.01
+    return parameters
+
+'''初始化两层神经网络
+first_layer = np.array([[0],[0],[0]])
+second_layer = np.array([[0],[0],[0],[0]])
+third_layer = np.array([[0],[0]])
+layer_dims = np.array([first_layer,second_layer,third_layer])
+initialize_parameters(layer_dims)
+'''
+
+#激活函数 activation_cache = "sigmoid"
+def sigmoid(x):
+    activation_cache = "sigmoid"
+    return 1 / (1 + np.exp(-x)), activation_cache
+
+'''
+dz = dadg(z) 
+dg(z)=da(da-1)
+'''
+def sigmoid_backward(da, activation_cache):
+    return da*da*(da - 1)
+
+'''
+向后传导 A代表前一个A，用于本层的X
+返回Z, a w b ,代表当前 a w b 推到出Z
+'''
+def linear_forward(A, W, b):
+    Z = np.dot(A, W) + b
+    cache = (a, w, b)
+    return Z, cache
+
+'''
+通过w, b , a_prew 用激活函数得到A
+'''
+def linear_activation_forward(A_prev, W, b, activation):
+    Z, cache = linear_forward(A_prev, W, b)
+    A
+    if(activation == "sigmoid"):
+        A, activation_cache = sigmoid(Z)
+    if(activation == "relu"):
+        A, activation_cache = sigmoid(Z)
+    return A， activation
+
+'''
+前向推导 最后得到AL
+'''
+def L_model_forward(X, parameters):
+    A = X
+    L = len(parameters)/2 #因为w1 b1 这样两个一组，所以有重复
+    caches= []
+    for i in range(1, L):
+        w = parameters["w"+str(l)]
+        b = parameters["b"+str(l)]
+        
+        A, cache = linear_activation_forward(A, w, b, activation = "relu")
+        caches.append(cache)
+        
+    AL, cache = linear_activation_forward(A, w, b, activation = "sigmoid")
+    caches.append(cache)
+    return AL, caches
+    
+        
+def compute_cost(AL, Y):
+    m = AL.shape[1]
+    logprobs = np.multiply(np.log(AL),Y) + np.multiply(np.log(1 - AL),1 - Y)
+    cost = - np.sum(logprobs) / m
+    cost = np.squeeze(cost)     # makes sure cost is the dimension we expect.
+                                # E.g., turns [[17]] into 17
+    assert(isinstance(cost, float))
+
+    return cost
+
+
+'''
+参数 cache 包含 w b a_prew
+'''
+ def linear_backward(dZ, cache):
+     prew_a, w, b= cache
+     dw = np.dot(dz, a)/m
+     db = np.sum(dz, axis = 1, keepdims= true)
+     dprew_a = np.dot(w.T, dz)
+     return dprew_a, dw, db
+ 
+def linear_activation_backward(dA, cache, activation):
+    dprew_a, dw, db = cache
+    if activation == "relu":
+        dZ = relu_backward(dA, activation_cache)
+        dA_prev, dW, db = linear_backward(dZ, linear_cache)
+        
+    elif activation == "sigmoid":
+        dZ = sigmoid_backward(dA, activation_cache)
+        dA_prev, dW, db = linear_backward(dZ, linear_cache)
+        
+        return dA_prev, dW, db
+    
+def L_model_backward(AL, Y, caches):
+    grads = {}
+    L = len(caches) # the number of layers
+    m = AL.shape[1]
+    Y = Y.reshape(AL.shape)
+    dAL = - (np.divide(Y, AL) - np.divide(1 - Y, 1 - AL))
+   
+    current_cache =  caches[L-1]
+    grads["dA" + str(L)], grads["dW" + str(L)], grads["db" + str(L)] 
+    = linear_activation_backward(dAL, current_cache, activation = "sigmoid")
+
+    for l in reversed(range(L-1)):
+        current_cache = caches[l]
+        dA_prev_temp, dW_temp, db_temp = linear_activation_backward(grads["dA" + str(l + 2)], current_cache, activation = "relu")
+        grads["dA" + str(l + 1)] = dA_prev_temp
+        grads["dW" + str(l + 1)] = dW_temp
+        grads["db" + str(l + 1)] = db_temp
+    return grads
+
+def update_parameters(parameters, grads, learning_rate):
+    L = len(parameters) // 2 # number of layers in the neural network
+
+    for l in range(L):
+        parameters["W" + str(l+1)] = parameters["W" + str(l+1)] - learning_rate * grads["dW" + str(l+1)]
+        parameters["b" + str(l+1)] = parameters["b" + str(l+1)] - learning_rate * grads["db" + str(l+1)]
+    return parameters
+    
+def L_layer_model(X, Y, layers_dims, learning_rate = 0.0075, num_iterations = 3000, print_cost=False):#lr was 0.009
+    np.random.seed(1)
+    costs = []                         
+
+    parameters = initialize_parameters_deep(layers_dims)
+
+    for i in range(0, num_iterations):
+        AL, caches = L_model_forward(X, parameters)
+        cost = compute_cost(AL, Y)
+        grads = L_model_backward(AL, Y, caches)
+        parameters = update_parameters(parameters, grads, learning_rate)
+
+        if print_cost and i % 100 == 0:
+            print ("Cost after iteration %i: %f" %(i, cost))
+        if print_cost and i % 100 == 0:
+            costs.append(cost)
+
+    plt.plot(np.squeeze(costs))
+    plt.ylabel('cost')
+    plt.xlabel('iterations (per tens)')
+    plt.title("Learning rate =" + str(learning_rate))
+    plt.show()
+
+    return parameters
